@@ -1,0 +1,34 @@
+# Byte-compiled / optimized / compiled files
+__pycache__/
+*.pyc
+
+# Virtual environments
+env/
+venv/
+
+# Local database
+*.sqlite3
+
+# Environment variables
+.env
+
+# Media and Static files (if not managed by a separate service)
+media/
+static/
+
+# Log files
+*.log
+
+# IDE-specific files (e.g., for VS Code, PyCharm)
+.vscode/
+.idea/
+
+# Testing and coverage reports
+.tox/
+.coverage
+htmlcov/
+.pytest_cache/
+
+.DS_Store
+.venv
+.env
