@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% if posts %}
+    <div class="grid-rows-4 grid-cols-4">
+      {% for post in posts %}
+        <div class="card w-96 bg-base-100 card-lg shadow-sm">
+          <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p>{{ post.description }}</p>
+            <div class="justify-end card-actions">
+              <button class="btn btn-primary">View Post</button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <h1>No posts available...</h1>
+  {% endif %}
+{% endblock %}
