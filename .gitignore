@@ -12,10 +12,6 @@ venv/
 # Environment variables
 .env
 
-# Media and Static files (if not managed by a separate service)
-media/
-static/
-
 # Log files
 *.log
 
@@ -32,3 +28,12 @@ htmlcov/
 .DS_Store
 .venv
 .env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/

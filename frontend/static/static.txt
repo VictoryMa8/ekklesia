@@ -1,0 +1,3 @@
+Run the CLI tool to scan files for classes and build Tailwind CSS:
+
+npx @tailwindcss/cli -i ./frontend/static/assets/styles/input.css -o ./frontend/static/assets/styles/output.css
