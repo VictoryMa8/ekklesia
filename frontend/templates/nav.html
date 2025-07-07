@@ -8,7 +8,10 @@
       </div>
       <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li>
-          <a href="">Tasks</a>
+          <a href="{% url 'tasks' %}">Tasks</a>
+        </li>
+        <li>
+          <a href="{% url 'study_sessions' %}">Study Sessions</a>
         </li>
         <li>
           <a>More</a>
@@ -31,20 +34,23 @@
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       <li>
-        <a href="">Tasks</a>
+        <a href="{% url 'tasks' %}">Tasks</a>
+      </li>
+      <li>
+          <a href="{% url 'study_sessions' %}">Study Sessions</a>
       </li>
       <li>
         <details>
           <summary>More</summary>
           <ul class="p-2">
             <li>
-              <a>About</a>
+              <a href="{% url 'about' %}">About</a>
             </li>
             <li>
-              <a>Profile</a>
+              <a href="{% url 'profile' %}">Profile</a>
             </li>
             <li>
-              <a>Contact</a>
+              <a href="{% url 'contact' %}">Contact</a>
             </li>
           </ul>
         </details>

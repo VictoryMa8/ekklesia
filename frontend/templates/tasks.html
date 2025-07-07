@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Tasks</h1>
+  <div id="tasks">
+    {% for task in tasks %}
+      <h2>Title: {{ task.title }}</h2>
+      <h2>Description: {{ task.description }}</h2>
+      <h2>Created: {{ task.created_at }}</h2>
+    {% endfor %}
+  </div>
+  <div id="new-task">
+    <h1>Create New Task</h1>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_table }}
+      <input type="submit" />
+    </form>
+  </div>
+{% endblock %}
