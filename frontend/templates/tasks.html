@@ -3,11 +3,23 @@
 {% block content %}
   <h1>Tasks</h1>
   <div id="tasks">
-    {% for task in tasks %}
-      <h2>Title: {{ task.title }}</h2>
-      <h2>Description: {{ task.description }}</h2>
-      <h2>Created: {{ task.created_at }}</h2>
-    {% endfor %}
+    <div class="carousel carousel-center rounded-box">
+      {% for task in tasks %}
+        <div class="carousel-item">
+          <div class="card card-border bg-base-100 w-96">
+            <div class="card-body">
+              <h2 class="card-title">{{ task.title }}</h2>
+              <p>{{ task.description }}</p>
+              <p>{{ task.created_at }}</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-primary">Mark Done</button>
+                <button class="btn btn-primary">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
   <div id="new-task">
     <h1>Create New Task</h1>
