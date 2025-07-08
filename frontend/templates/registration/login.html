@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center text-4xl">Welcome to Ekklesia, please login 🪬</h1>
+  <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 self-center" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td class="label text-xl">{{ form.username.label_tag }}</td>
+        <td class="input">{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td class="label text-xl">{{ form.password.label_tag }}</td>
+        <td class="input">{{ form.password }}</td>
+      </tr>
+    </table>
+    <input class="btn btn-neutral mt-4" type="submit" value="Login" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+{% endblock %}
