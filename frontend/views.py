@@ -24,6 +24,15 @@ def tasks(request):
     return render(request, 'tasks.html', context={'tasks': tasks, 'form': form})
 
 @login_required
+def complete_task(request, uuid):
+    task = get_object_or_404(Task, uuid=uuid)
+    if request.method == 'POST':
+        task.completed = True
+        task.save()
+        return redirect('tasks')
+    return redirect('tasks')
+
+@login_required
 def delete_task(request, uuid):
     task = get_object_or_404(Task, uuid=uuid)
     if request.method == 'POST':
