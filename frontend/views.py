@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Task, StudySession
 from .forms import NewTask
@@ -17,10 +17,18 @@ def tasks(request):
             task = form.save(commit=False)
             task.author = user
             task.save()
-            return render(request, 'tasks.html', context={'tasks': tasks, 'form': form})
+            return redirect('tasks')
     else:
         form = NewTask()
     return render(request, 'tasks.html', context={'tasks': tasks, 'form': form})
+
+@login_required
+def delete_task(request, uuid):
+    task = get_object_or_404(Task, uuid=uuid)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('tasks')
+    return redirect('tasks')
 
 @login_required
 def study_sessions(request):

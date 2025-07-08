@@ -1,32 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Tasks</h1>
-  <div id="tasks">
-    <div class="carousel carousel-center rounded-box">
+  <div id="tasks" class="flex items-center flex-col">
+    <div id="new-task" class="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4 mt-10">
+      <h1 class="fieldset-legend text-2xl">Create New Task</h1>
+      <form id="new-task-form" method="POST" class="flex-col items-center gap-10">
+        {% csrf_token %}
+        {{ form.title }}
+        {{ form.description }}
+        <input class="btn btn-neutral mt-4 block" type="submit" value="Create" />
+      </form>
+    </div>
+    <h1 class="text-center text-4xl m-10">Incomplete Tasks</h1>
+    <div id="incomplete-tasks" class="flex flex-wrap gap-4 justify-center">
       {% for task in tasks %}
-        <div class="carousel-item">
-          <div class="card card-border bg-base-100 w-96">
-            <div class="card-body">
-              <h2 class="card-title">{{ task.title }}</h2>
-              <p>{{ task.description }}</p>
-              <p>{{ task.created_at }}</p>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Mark Done</button>
-                <button class="btn btn-primary">Delete</button>
-              </div>
+        <div class="card card-border bg-base-100 w-lg">
+          <div class="card-body">
+            <h2 class="card-title">{{ task.title }}</h2>
+            <p>{{ task.description }}</p>
+            <p>{{ task.created_at }}</p>
+            <div class="card-actions justify-end">
+              <form method="POST" action="{% url 'delete_task' uuid=task.uuid %}">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="Delete" />
+              </form>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
-  </div>
-  <div id="new-task">
-    <h1>Create New Task</h1>
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_table }}
-      <input type="submit" />
-    </form>
+    <h1 class="text-center text-4xl m-10">Complete Tasks</h1>
+    <div id="complete-tasks" class="flex-wrap"></div>
   </div>
 {% endblock %}
