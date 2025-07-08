@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="text-center text-4xl">Welcome to Ekklesia, please login 🪬</h1>
-  <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 self-center" method="post" action="{% url 'login' %}">
+  <h1 class="text-center text-6xl font-bold font-[EB_Garamond] p-10">Welcome to <i>Ekklesia</i>, please login 🪬</h1>
+  <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 self-center mb-10" method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <table>
       <tr>

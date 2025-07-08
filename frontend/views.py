@@ -11,34 +11,34 @@ def index(request):
 @login_required
 def tasks(request):
     user = request.user
+    form = NewTask()
     tasks = Task.objects.filter(author=user)
-    if request.method == "POST":
-        form = NewTask(request.POST)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.author = user
-            task.save()
-            return redirect('tasks')
-    else:
-        form = NewTask()
-    return render(request, 'tasks.html', context={'tasks': tasks, 'form': form})
+    return render(request, 'tasks.html', context={'form': form, 'tasks': tasks})
+
+def create_task(request):
+    user = request.user
+    form = NewTask(request.POST)
+    if form.is_valid():
+        task = form.save(commit=False)
+        task.author = user
+        task.save()
+    tasks = Task.objects.filter(author=user)
+    return render(request, 'fragments/current_tasks.html', context={'tasks': tasks})
 
 @login_required
 def complete_task(request, uuid):
     task = get_object_or_404(Task, uuid=uuid)
-    if request.method == 'POST':
-        task.completed = True
-        task.save()
-        return redirect('tasks')
-    return redirect('tasks')
+    task.completed = True
+    task.save()
+    tasks = Task.objects.filter(author=request.user) # fetch all tasks of user
+    return render(request, 'fragments/current_tasks.html', context={'tasks': tasks}) # render all tasks in the fragment
 
 @login_required
 def delete_task(request, uuid):
-    task = get_object_or_404(Task, uuid=uuid)
-    if request.method == 'POST':
-        task.delete()
-        return redirect('tasks')
-    return redirect('tasks')
+    task = get_object_or_404(Task, uuid=uuid) # get specific task to delete
+    task.delete() # delete requested task
+    tasks = Task.objects.filter(author=request.user) # fetch all tasks of user
+    return render(request, 'fragments/current_tasks.html', context={'tasks': tasks}) # render all tasks in the fragment
 
 @login_required
 def study_sessions(request):

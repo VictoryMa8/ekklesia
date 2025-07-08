@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="flex flex-col items-center">
-    <h1 class="text-4xl">Study Sessions</h1>
+  <div id="study-sessions" class="flex flex-col items-center mb-10">
     <div id="new-task" class="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4 mt-10">
-      <h1 class="text-2xl font-bold text-center mb-4">Create New Study Session</h1>
+      <h1 class="text-4xl font-bold text-center mb-4 font-[EB_Garamond]">Create New <i>Synedrion</i></h1>
       <form id="new-task-form" method="POST" class="flex flex-col items-center gap-4">
         {% csrf_token %}
         {{ form.title }}
@@ -13,8 +12,8 @@
         <input class="btn btn-neutral mt-4 block" type="submit" value="Create" />
       </form>
     </div>
-    <h1 class="text-center text-4xl m-10">Your Study Sessions</h1>
-    <div id="study-sessions" class="flex flex-wrap gap-4 justify-center">
+    <h1 class="text-center text-4xl m-10">Your Synedrion</h1>
+    <div id="current-study-sessions" class="flex flex-wrap gap-4 justify-center">
       {% if study_sessions %}
         {% for study_session in study_sessions %}
           <div class="card card-border bg-base-100 w-lg">
@@ -36,7 +35,7 @@
           </div>
         {% endfor %}
       {% else %}
-        <h2 class="text-2xl font-thin italic">Try to create a new study session 🪬📚</h2>
+        <h2 class="text-2xl font-thin italic">Try to create a new synedrion 📚</h2>
       {% endif %}
     </div>
   </div>

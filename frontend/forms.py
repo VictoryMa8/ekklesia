@@ -7,19 +7,19 @@ class NewTask(forms.ModelForm):
         model = Task
         fields = ['title', 'description']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'input', 'placeholder': 'A title for your task...'}),
-            'description': forms.TextInput(attrs={'class': 'input mt-5', 'placeholder': 'A description for your task...'}),
+            'title': forms.TextInput(attrs={'class': 'input', 'placeholder': 'A descriptive title...'}),
+            'description': forms.TextInput(attrs={'class': 'input mt-5', 'placeholder': 'A descriptive description...'}),
         }
 
 class NewStudySession(forms.ModelForm):
-    study_time_minutes = forms.IntegerField(min_value=5, max_value=600, widget=forms.NumberInput(attrs={'class': 'input', 'placeholder': 'Study time in minutes...', 'value': 20}))
+    study_time_minutes = forms.IntegerField(min_value=5, max_value=600, widget=forms.NumberInput(attrs={'class': 'input', 'placeholder': 'Study time in minutes...', 'value': 25}))
     break_time_minutes = forms.IntegerField(min_value=5, max_value=60, widget=forms.NumberInput(attrs={'class': 'input', 'placeholder': 'Break time in minutes...', 'value': 5}))
     
     class Meta:
         model = StudySession
         fields = ['title']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'input', 'placeholder': 'A title for your study session...'}),
+            'title': forms.TextInput(attrs={'class': 'input', 'placeholder': 'A descriptive title...'}),
         }
     
     # overriding default model form save to convert minutes to DurationField

@@ -10,7 +10,7 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=1000)
+    description = models.CharField(blank=True, null=True, max_length=1000)
 
 class StudySession(models.Model):
     uuid = models.UUIDField(default=uuid4, unique=True, primary_key=True)

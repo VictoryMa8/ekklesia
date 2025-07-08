@@ -1,0 +1,38 @@
+<div id="current-tasks" class="flex flex-wrap gap-4 justify-center">
+  {% if tasks %}
+    {% for task in tasks %}
+      <div class="card card-border bg-base-300 w-lg">
+        <div class="card-body">
+          <h2 class="card-title">{{ task.title }}</h2>
+          {% if task.description %}
+            <p>{{ task.description }}</p>
+          {% else %}
+            <p class="italic">No description...</p>
+          {% endif %}
+          <p>{{ task.created_at }}</p>
+          <div class="card-actions justify-end">
+            {% if task.completed %}
+              <form method="POST" action="{% url 'complete_task' uuid=task.uuid %}">
+                {% csrf_token %}
+                <input class="btn btn-disabled" type="submit" value="Mark Complete" />
+              </form>
+            {% else %}
+              <form hx-post="{% url 'complete_task' uuid=task.uuid %}" hx-target="#current-tasks" 
+            hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="Mark Complete" />
+              </form>
+            {% endif %}
+            <form hx-post="{% url 'delete_task' uuid=task.uuid %}" hx-target="#current-tasks" 
+            hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+              {% csrf_token %}
+              <input class="btn btn-primary" type="submit" value="Delete" />
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <h2 class="text-2xl font-thin italic">You currently have no kaleo! ✨💫</h2>
+  {% endif %}
+</div>

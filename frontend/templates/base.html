@@ -1,3 +1,4 @@
+{% load django_htmx %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,15 +10,16 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/images/favicon-32x32.png' %}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/images/favicon-16x16.png' %}" />
     <link rel="manifest" href="{% static 'site.webmanifest' %}" />
+    {% htmx_script %}
     {% block title %}
       <title>Ekklesia</title>
     {% endblock %}
   </head>
   <body class="flex flex-col h-screen justify-between">
-    {% include 'nav.html' %}
+    {% include 'fragments/nav.html' %}
     {% block content %}
 
     {% endblock %}
-    {% include 'footer.html' %}
+    {% include 'fragments/footer.html' %}
   </body>
 </html>

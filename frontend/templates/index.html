@@ -8,13 +8,13 @@
   <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content text-center max-sm:flex max-sm:flex-col">
       {% load static %}
-      <img src="{% static 'assets/images/logo.png' %}" />
       <div class="max-w-md">
-        <h1 class="text-5xl font-bold">Ekklesia</h1>
-        <p class="py-6">Welcome to Ekklesia, your task and time management app.</p>
-        <a class="btn btn-primary" href="{% url 'tasks' %}">View Tasks</a>
-        <a class="btn btn-primary" href="{% url 'study_sessions' %}">View Study Sessions</a>
+        <h1 class="text-6xl font-bold font-[EB_Garamond] italic">Ekklesia</h1>
+        <p class="py-4 text-4xl font-[EB_Garamond]">Welcome to your elegant task management & study habits app</p>
+        <a class="btn btn-primary text-2xl font-light mt-5" href="{% url 'tasks' %}">View Kaleo</a>
+        <a class="btn btn-primary text-2xl font-light mt-5" href="{% url 'study_sessions' %}">View Synedria</a>
       </div>
+      <img src="{% static 'assets/images/logo.png' %}" />
     </div>
   </div>
 {% endblock %}

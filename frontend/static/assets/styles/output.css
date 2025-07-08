@@ -1,4 +1,5 @@
 /*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -11,14 +12,20 @@
     --container-xs: 20rem;
     --container-md: 28rem;
     --container-lg: 32rem;
+    --text-lg: 1.125rem;
+    --text-lg--line-height: calc(1.75 / 1.125);
     --text-xl: 1.25rem;
     --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: 1.875rem;
+    --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
     --text-5xl: 3rem;
     --text-5xl--line-height: 1;
+    --text-6xl: 3.75rem;
+    --text-6xl--line-height: 1;
     --font-weight-thin: 100;
     --font-weight-light: 300;
     --font-weight-bold: 700;
@@ -817,6 +824,15 @@
       grid-row-start: 1;
     }
   }
+  .m-5 {
+    margin: calc(var(--spacing) * 5);
+  }
+  .m-6 {
+    margin: calc(var(--spacing) * 6);
+  }
+  .m-8 {
+    margin: calc(var(--spacing) * 8);
+  }
   .m-10 {
     margin: calc(var(--spacing) * 10);
   }
@@ -871,9 +887,6 @@
   }
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
-  }
-  .mb-5 {
-    margin-bottom: calc(var(--spacing) * 5);
   }
   .mb-10 {
     margin-bottom: calc(var(--spacing) * 10);
@@ -966,8 +979,14 @@
   .hidden {
     display: none;
   }
+  .h-2 {
+    height: calc(var(--spacing) * 2);
+  }
   .h-5 {
     height: calc(var(--spacing) * 5);
+  }
+  .h-\[100px\] {
+    height: 100px;
   }
   .h-screen {
     height: 100vh;
@@ -1063,9 +1082,6 @@
   .bg-neutral {
     background-color: var(--color-neutral);
   }
-  .bg-primary {
-    background-color: var(--color-primary);
-  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -1078,15 +1094,25 @@
   .px-1 {
     padding-inline: calc(var(--spacing) * 1);
   }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
   }
   .text-center {
     text-align: center;
   }
+  .font-\[EB_Garamond\] {
+    font-family: EB Garamond;
+  }
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
+  }
+  .text-3xl {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
   }
   .text-4xl {
     font-size: var(--text-4xl);
@@ -1096,6 +1122,14 @@
     font-size: var(--text-5xl);
     line-height: var(--tw-leading, var(--text-5xl--line-height));
   }
+  .text-6xl {
+    font-size: var(--text-6xl);
+    line-height: var(--tw-leading, var(--text-6xl--line-height));
+  }
+  .text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--tw-leading, var(--text-lg--line-height));
+  }
   .text-xl {
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
@@ -1104,9 +1138,16 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
+  .font-light {
+    --tw-font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-light);
+  }
   .font-thin {
     --tw-font-weight: var(--font-weight-thin);
     font-weight: var(--font-weight-thin);
+  }
+  .text-\[EB_Garamond\] {
+    color: EB Garamond;
   }
   .text-neutral-content {
     color: var(--color-neutral-content);
