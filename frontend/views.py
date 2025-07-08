@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Task, StudySession
-from .forms import NewTask
+from .forms import NewTask, NewStudySession
+from datetime import timedelta # for study session times
 
 @login_required
 def index(request):
@@ -32,7 +33,26 @@ def delete_task(request, uuid):
 
 @login_required
 def study_sessions(request):
-    return render(request, 'study_sessions.html')
+    user = request.user
+    study_sessions = StudySession.objects.filter(author=user)
+    if request.method == "POST":
+        form = NewStudySession(request.POST)
+        if form.is_valid():
+            study_session = form.save(commit=False)
+            study_session.author = user
+            study_session.save()
+            return redirect('study_sessions')
+    else:
+        form = NewStudySession()
+    return render(request, 'study_sessions.html', context={'study_sessions': study_sessions, 'form': form})
+
+@login_required
+def delete_study_session(request, uuid):
+    study_session = get_object_or_404(StudySession, uuid=uuid)
+    if request.method == 'POST':
+        study_session.delete()
+        return redirect('study_sessions')
+    return redirect('study_sessions')
 
 @login_required
 def about(request):

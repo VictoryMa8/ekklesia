@@ -6,14 +6,14 @@
 
 {% block content %}
   <div class="hero bg-base-200 min-h-screen">
-    <div class="hero-content text-center">
+    <div class="hero-content text-center max-sm:flex max-sm:flex-col">
       {% load static %}
       <img src="{% static 'assets/images/logo.png' %}" />
       <div class="max-w-md">
         <h1 class="text-5xl font-bold">Ekklesia</h1>
         <p class="py-6">Welcome to Ekklesia, your task and time management app.</p>
-        <button class="btn btn-primary"><a href="{% url 'tasks' %}">View Tasks</a></button>
-        <button class="btn btn-primary"><a href="{% url 'study_sessions' %}">View Study Sessions</a></button>
+        <a class="btn btn-primary" href="{% url 'tasks' %}">View Tasks</a>
+        <a class="btn btn-primary" href="{% url 'study_sessions' %}">View Study Sessions</a>
       </div>
     </div>
   </div>

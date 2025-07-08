@@ -17,6 +17,6 @@ class StudySession(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100)
-    study_time = models.IntegerField() # time is in seconds
-    break_time = models.IntegerField() # time is in seconds
+    study_time = models.DurationField() # interval data type in Postgres
+    break_time = models.DurationField() # interval data type in Postgres
     cycles = models.IntegerField(default=0) # number of times break is done
