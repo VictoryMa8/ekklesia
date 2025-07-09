@@ -1,0 +1,25 @@
+<div id="current-study-sessions" class="flex flex-wrap gap-4 justify-center">
+  {% if study_sessions %}
+    {% for study_session in study_sessions %}
+      <div class="card card-border bg-base-100 w-lg">
+        <div class="card-body">
+          <h2 class="card-title">{{ study_session.title }}</h2>
+          <p class="text-xl">Study Time: {{ study_session.study_time }}</p>
+          <p class="text-xl">Break Time: {{ study_session.break_time }}</p>
+          <div class="card-actions justify-end">
+            <form method="POST">
+              {% csrf_token %}
+              <input class="btn btn-primary" type="submit" value="Start Studying" />
+            </form>
+            <form hx-post="{% url 'delete_study_session' uuid=study_session.uuid %}" hx-target="#current-study-sessions" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="Delete" />
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <h2 class="text-2xl font-thin italic">Try to create a new synedrion 📚</h2>
+  {% endif %}
+</div>

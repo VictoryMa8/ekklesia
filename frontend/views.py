@@ -55,13 +55,22 @@ def study_sessions(request):
         form = NewStudySession()
     return render(request, 'study_sessions.html', context={'study_sessions': study_sessions, 'form': form})
 
+def create_study_session(request):
+    user = request.user
+    form = NewStudySession(request.POST)
+    if form.is_valid():
+        study_session = form.save(commit=False)
+        study_session.author = user
+        study_session.save()
+    study_sessions = StudySession.objects.filter(author=user)
+    return render(request, 'fragments/current_study_sessions.html', context={'study_sessions': study_sessions})
+
 @login_required
 def delete_study_session(request, uuid):
     study_session = get_object_or_404(StudySession, uuid=uuid)
-    if request.method == 'POST':
-        study_session.delete()
-        return redirect('study_sessions')
-    return redirect('study_sessions')
+    study_session.delete()
+    study_sessions = StudySession.objects.filter(author=request.user) # fetch all study sessions
+    return render(request, 'fragments/current_study_sessions.html', context={'study_sessions': study_sessions}) # render all study sessions in the fragment
 
 @login_required
 def about(request):

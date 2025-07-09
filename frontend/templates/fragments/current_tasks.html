@@ -17,8 +17,7 @@
                 <input class="btn btn-disabled" type="submit" value="Mark Complete" />
               </form>
             {% else %}
-              <form hx-post="{% url 'complete_task' uuid=task.uuid %}" hx-target="#current-tasks" 
-            hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+              <form hx-post="{% url 'complete_task' uuid=task.uuid %}" hx-target="#current-tasks" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
                 {% csrf_token %}
                 <input class="btn btn-primary" type="submit" value="Mark Complete" />
               </form>
