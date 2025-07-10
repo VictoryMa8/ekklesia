@@ -8,7 +8,7 @@
           <p class="text-xl">Break Time: {{ study_session.break_time }}</p>
 
           <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('htmx:load', function() {
               // have to convert django DurationField to string
               function durationFieldToString(time) {
                 const studyTimeSplit = time.split(":");
@@ -56,10 +56,10 @@
 
               pauseButton.addEventListener("click", (e) => {
                 e.preventDefault();
-                  clearInterval(countdownInterval); // stops the timer
-                  startButton.disabled = false;
-                  startButton.value = "Start Studying";
-                  pauseButton.disabled = true;
+                clearInterval(countdownInterval); // stops the timer
+                startButton.disabled = false;
+                startButton.value = "Start Studying";
+                pauseButton.disabled = true;
               })
 
               resetButton.addEventListener("click", (e) => {

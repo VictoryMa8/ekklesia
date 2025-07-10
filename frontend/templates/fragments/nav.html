@@ -6,7 +6,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
         </svg>
       </div>
-      <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+      <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow">
         <li>
           <a class="text-2xl font-[EB_Garamond]" href="{% url 'tasks' %}">Kaleo</a>
         </li>
@@ -32,7 +32,7 @@
     <a class="btn btn-ghost text-4xl font-[EB_Garamond]" href="{% url 'index' %}">Ekklesia</a>
   </div>
   <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
+    <ul class="menu menu-horizontal px-1 z-50">
       <li>
         <a class="text-2xl font-[EB_Garamond]" href="{% url 'tasks' %}">Kaleo</a>
       </li>
@@ -44,13 +44,13 @@
           <summary class="text-2xl font-[EB_Garamond]">More</summary>
           <ul class="p-2">
             <li>
-              <a class="text-lg" href="{% url 'about' %}">About</a>
+              <a class="text-2xl font-[EB_Garamond]" href="{% url 'about' %}">About</a>
             </li>
             <li>
-              <a class="text-lg" href="{% url 'profile' %}">Profile</a>
+              <a class="text-2xl font-[EB_Garamond]" href="{% url 'profile' %}">Profile</a>
             </li>
             <li>
-              <a class="text-lg" href="{% url 'contact' %}">Contact</a>
+              <a class="text-2xl font-[EB_Garamond]" href="{% url 'contact' %}">Contact</a>
             </li>
           </ul>
         </details>
