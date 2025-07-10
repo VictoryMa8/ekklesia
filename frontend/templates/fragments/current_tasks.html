@@ -1,7 +1,7 @@
 <div id="current-tasks" class="flex flex-wrap gap-4 justify-center">
   {% if tasks %}
     {% for task in tasks %}
-      <div class="card card-border bg-base-300 w-lg">
+      <div id="{{ task.uuid }}" class="card card-border bg-base-300 w-lg">
         <div class="card-body">
           <h2 class="card-title">{{ task.title }}</h2>
           {% if task.description %}
@@ -9,20 +9,19 @@
           {% else %}
             <p class="italic">No description...</p>
           {% endif %}
+          <span class="loading loading-bars loading-lg htmx-indicator mt-5 mb-0" id="loading-{{ task.uuid }}"></span>
           <p>{{ task.created_at }}</p>
           <div class="card-actions justify-end">
             {% if task.completed %}
-              <form method="POST" action="{% url 'complete_task' uuid=task.uuid %}">
-                {% csrf_token %}
-                <input class="btn btn-disabled" type="submit" value="Mark Complete" />
-              </form>
+              {% csrf_token %}
+              <input class="btn btn-disabled" type="submit" value="Mark Complete" />
             {% else %}
-              <form hx-post="{% url 'complete_task' uuid=task.uuid %}" hx-target="#current-tasks" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+              <form hx-on::before-request="document.getElementById('{{ task.uuid }}').style.opacity = 0.3;" hx-on::after-request="if(event.detail.successful) this.reset(); document.getElementById('{{ task.uuid }}').style.opacity = 1;" hx-indicator="#loading-{{ task.uuid }}" hx-post="{% url 'complete_task' uuid=task.uuid %}" hx-target="#current-tasks" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
                 {% csrf_token %}
                 <input class="btn btn-primary" type="submit" value="Mark Complete" />
               </form>
             {% endif %}
-            <form hx-post="{% url 'delete_task' uuid=task.uuid %}" hx-target="#current-tasks" 
+            <form hx-on::before-request="document.getElementById('{{ task.uuid }}').style.opacity = 0.3;" hx-indicator="#loading-{{ task.uuid }}" hx-post="{% url 'delete_task' uuid=task.uuid %}" hx-target="#current-tasks" 
             hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
               {% csrf_token %}
               <input class="btn btn-primary" type="submit" value="Delete" />
