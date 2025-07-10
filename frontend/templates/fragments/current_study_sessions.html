@@ -4,13 +4,81 @@
       <div class="card card-border bg-base-100 w-lg">
         <div class="card-body">
           <h2 class="card-title">{{ study_session.title }}</h2>
-          <p class="text-xl">Study Time: {{ study_session.study_time }}</p>
+          <p class="text-xl">Study Time: <span id="study-time-{{ study_session.uuid }}">{{ study_session.study_time }}</span></p>
           <p class="text-xl">Break Time: {{ study_session.break_time }}</p>
-          <div class="card-actions justify-end">
-            <form method="POST">
-              {% csrf_token %}
-              <input class="btn btn-primary" type="submit" value="Start Studying" />
-            </form>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // have to convert django DurationField to string
+              function durationFieldToString(time) {
+                const studyTimeSplit = time.split(":");
+                const studyTimeSeconds = parseInt(studyTimeSplit[0] * 3600 + parseInt(studyTimeSplit[1]) * 60 + parseInt(studyTimeSplit[2]));
+                return studyTimeSeconds;
+              }
+
+              // have to format time to display it as a string
+              function formatTime(time) {
+                const minutes = Math.floor(time / 60);
+                const seconds = time % 60
+                return `${minutes}:${seconds.toString().padStart(2, '0')}` // padStart for leading zero
+              }
+
+              const countdownDisplay = document.getElementById("study-time-{{ study_session.uuid }}");
+              const startButton = document.getElementById("start-{{ study_session.uuid }}");
+              const pauseButton = document.getElementById("pause-{{ study_session.uuid }}");
+              const resetButton = document.getElementById("reset-{{ study_session.uuid }}");
+              pauseButton.disabled = true;
+              resetButton.disabled = true;
+              
+              let countdownInterval; 
+              let studyTime = "{{ study_session.study_time }}";
+              let count = durationFieldToString(studyTime);
+              countdownDisplay.innerHTML = formatTime(count);
+              
+              startButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                startButton.disabled = true;
+                pauseButton.disabled = false;
+                resetButton.disabled = false;
+                startButton.value = "Studying..."
+
+                countdownInterval = setInterval(() => { // executes every 1000ms
+                  count--;
+                  countdownDisplay.innerHTML = formatTime(count);
+                  if (count <= 0) {
+                    clearInterval(countdownInterval); // stops the timer
+                    alert("Synedrion is now complete, time for a break.")
+                    startButton.disabled = false;
+                    startButton.value = "Start Studying";
+                  }
+                }, 1000) // interval of 1000ms for setInterval
+              })
+
+              pauseButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                  clearInterval(countdownInterval); // stops the timer
+                  startButton.disabled = false;
+                  startButton.value = "Start Studying";
+                  pauseButton.disabled = true;
+              })
+
+              resetButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                clearInterval(countdownInterval); // stops the timer
+                startButton.disabled = false;
+                startButton.value = "Start Studying";
+                pauseButton.disabled = true;
+                resetButton.disabled = true;
+                count = durationFieldToString("{{ study_session.study_time }}"); // get original value of study_time
+                countdownDisplay.innerHTML = formatTime(count);
+              })
+            })
+          </script>
+
+          <div class="card-actions">
+              <input id="start-{{ study_session.uuid }}" class="btn btn-primary" type="button" value="Start Studying" />
+              <input id="pause-{{ study_session.uuid }}" class="btn btn-primary" type="button" value="Pause" />
+              <input id="reset-{{ study_session.uuid }}" class="btn btn-primary" type="button" value="Reset" />
             <form hx-post="{% url 'delete_study_session' uuid=study_session.uuid %}" hx-target="#current-study-sessions" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
                 {% csrf_token %}
                 <input class="btn btn-primary" type="submit" value="Delete" />
