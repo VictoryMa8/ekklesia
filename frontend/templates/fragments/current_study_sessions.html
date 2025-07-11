@@ -5,7 +5,7 @@
         <div class="card-body">
           <h2 class="card-title">{{ study_session.title }}</h2>
           <p class="text-xl">Study Time: <span id="study-time-{{ study_session.uuid }}">{{ study_session.study_time }}</span></p>
-          <p class="text-xl">Break Time: {{ study_session.break_time }}</p>
+          <p class="text-xl">Break Time: <span id="break-time-{{ study_session.uuid }}">{{ study_session.break_time }}</span></p>
 
           <script>
             document.addEventListener('htmx:load', function() {
@@ -24,44 +24,82 @@
               }
 
               const countdownDisplay = document.getElementById("study-time-{{ study_session.uuid }}");
+              const breakDisplay = document.getElementById("break-time-{{ study_session.uuid }}");
               const startButton = document.getElementById("start-{{ study_session.uuid }}");
               const pauseButton = document.getElementById("pause-{{ study_session.uuid }}");
               const resetButton = document.getElementById("reset-{{ study_session.uuid }}");
               pauseButton.disabled = true;
               resetButton.disabled = true;
               
-              let countdownInterval; 
-              let studyTime = "{{ study_session.study_time }}";
-              let count = durationFieldToString(studyTime);
+              /*
+              countdownInterval CAN BE FOR STUDYING OR BREAK
+              onBreak FOR BUTTON/TIMER LOGIC
+              count FOR STUDY TIME
+              breakCount FOR BREAK TIME
+              SET countdownDisplay AND breakDisplay TO INITIAL VALUES FROM DATABASE
+              */
+              let countdownInterval;
+              let onBreak = false;
+              let count = durationFieldToString("{{ study_session.study_time }}");
+              let breakCount = durationFieldToString("{{ study_session.break_time }}");
               countdownDisplay.innerHTML = formatTime(count);
+              breakDisplay.innerHTML = formatTime(breakCount); 
               
+              // START BUTTON LOGIC
               startButton.addEventListener("click", (e) => {
                 e.preventDefault();
                 startButton.disabled = true;
                 pauseButton.disabled = false;
                 resetButton.disabled = false;
-                startButton.value = "Studying..."
 
-                countdownInterval = setInterval(() => { // executes every 1000ms
-                  count--;
-                  countdownDisplay.innerHTML = formatTime(count);
-                  if (count <= 0) {
-                    clearInterval(countdownInterval); // stops the timer
-                    alert("Synedrion is now complete, time for a break.")
-                    startButton.disabled = false;
-                    startButton.value = "Start Studying";
-                  }
-                }, 1000) // interval of 1000ms for setInterval
+                if (onBreak) {
+                  countdownInterval = setInterval(() => { // executes every 1000ms
+                    breakCount -= 200;
+                    breakDisplay.innerHTML = formatTime(breakCount);
+                    if (breakCount <= 0) {
+                      clearInterval(countdownInterval); // stops the timer
+                      alert("Break is now complete, time for a Synedrion!") // alert the user
+                      onBreak = false; // break complete, time to study
+                      breakCount = durationFieldToString("{{ study_session.break_time }}") // reset break timer
+                      breakDisplay.innerHTML = formatTime(breakCount); // reset break timer display
+                      startButton.value = "Start Studying"; // change text to 'start studying'
+                      startButton.disabled = false;
+                      pauseButton.disabled = true;
+                      resetButton.disabled = true;
+                    }
+                  }, 1000) // interval of 1000ms for setInterval
+                  startButton.value = "On break..."
+                } else {
+                  countdownInterval = setInterval(() => { // executes every 1000ms
+                    count -= 200;
+                    countdownDisplay.innerHTML = formatTime(count);
+                    if (count <= 0) {
+                      clearInterval(countdownInterval); // stops the timer
+                      alert("Synedrion is now complete, time for a break!") // alert the user
+                      onBreak = true; // study timer done, time for a break
+                      count = durationFieldToString("{{ study_session.study_time }}") // reset study timer
+                      countdownDisplay.innerHTML = formatTime(count); // reset study timer display
+                      startButton.value = "Start Break"; // display 'start break' on button
+                      startButton.disabled = false;
+                      pauseButton.disabled = true;
+                      resetButton.disabled = true;
+                    }
+                  }, 1000) // interval of 1000ms for setInterval
+
+                  startButton.value = "Studying..."
+                }
               })
 
+              // PAUSE BUTTON LOGIC
               pauseButton.addEventListener("click", (e) => {
                 e.preventDefault();
                 clearInterval(countdownInterval); // stops the timer
                 startButton.disabled = false;
-                startButton.value = "Start Studying";
+                startButton.value = onBreak ? "Continue Break" : "Continue Studying"
                 pauseButton.disabled = true;
               })
 
+              // RESET BUTTON LOGIC
               resetButton.addEventListener("click", (e) => {
                 e.preventDefault();
                 clearInterval(countdownInterval); // stops the timer
@@ -69,10 +107,15 @@
                 startButton.value = "Start Studying";
                 pauseButton.disabled = true;
                 resetButton.disabled = true;
+
+                onBreak = false; // if on break, make it no longer on break
                 count = durationFieldToString("{{ study_session.study_time }}"); // get original value of study_time
+                breakCount = durationFieldToString("{{ study_session.break_time }}"); // get original value of study_time
                 countdownDisplay.innerHTML = formatTime(count);
+                breakDisplay.innerHTML = formatTime(breakCount);
               })
             })
+
           </script>
 
           <div class="card-actions">
