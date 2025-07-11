@@ -4,7 +4,7 @@
   <div id="study-sessions" class="flex flex-col items-center mb-10">
     <div id="new-task" class="fieldset bg-base-200 border-base-300 rounded-box w-md border p-4 mt-10">
       <h1 class="text-4xl font-bold text-center mb-4 font-[EB_Garamond]">Create New <i>Synedrion</i></h1>
-      <form hx-post="{% url 'create_study_session' %}" hx-on::after-request="if(event.detail.successful) this.reset()" hx-target="#current-study-sessions" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}' class="flex flex-col items-center gap-4">
+      <form hx-post="{% url 'create_study_session' %}" hx-on::before-request="document.getElementById('current-study-sessions').style.opacity = 0.3;" hx-on::after-request="if(event.detail.successful) this.reset(); document.getElementById('current-study-sessions').style.opacity = 1;" hx-indicator="#loading" hx-target="#current-study-sessions" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}' class="flex flex-col items-center gap-4">
         {% csrf_token %}
         {{ form.title }}
         {{ form.study_time_minutes }}
@@ -13,6 +13,7 @@
       </form>
     </div>
     <h1 class="text-center text-4xl m-8 font-[EB_Garamond]">Your Synedria</h1>
+    <span class="loading loading-bars loading-lg htmx-indicator mb-8" id="loading"></span>
     {% include 'fragments/current_study_sessions.html' %}
   </div>
 {% endblock %}
