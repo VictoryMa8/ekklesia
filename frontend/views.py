@@ -27,6 +27,10 @@ def create_task(request):
 
 @login_required
 def complete_task(request, uuid):
+    user = request.user
+    user.tasks_completed += 1
+    user.save()
+
     task = get_object_or_404(Task, uuid=uuid)
     task.completed = True
     task.save()
@@ -71,6 +75,13 @@ def delete_study_session(request, uuid):
     study_session.delete()
     study_sessions = StudySession.objects.filter(author=request.user) # fetch all study sessions
     return render(request, 'fragments/current_study_sessions.html', context={'study_sessions': study_sessions}) # render all study sessions in the fragment
+
+@login_required
+def update_user(request, study_time):
+    user = request.user
+    user.cycles_completed += 1
+    user.total_time_studied  += study_time
+    user.save()
 
 @login_required
 def about(request):

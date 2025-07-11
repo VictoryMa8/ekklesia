@@ -5,7 +5,7 @@ from uuid import uuid4
 class Demos(AbstractUser):
     tasks_completed = models.IntegerField(default=0)
     cycles_completed = models.IntegerField(default=0)
-    total_time_studied = models.DurationField(blank=True, null=True)
+    total_time_studied = models.IntegerField(default=0)
 
     def __str__(self):
         return self.username
