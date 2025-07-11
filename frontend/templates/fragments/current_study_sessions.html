@@ -1,7 +1,7 @@
 <div id="current-study-sessions" class="flex flex-wrap gap-4 justify-center">
   {% if study_sessions %}
     {% for study_session in study_sessions %}
-      <div class="card card-border bg-base-100 w-lg">
+      <div class="card card-border bg-base-300 w-lg">
         <div class="card-body" id="{{ study_session.uuid }}">
           <h2 class="card-title">{{ study_session.title }}</h2>
           <p class="text-xl">Study Time: <span id="study-time-{{ study_session.uuid }}">{{ study_session.study_time }}</span></p>
@@ -71,8 +71,10 @@
                     if (breakCount <= 0) {
                       clearInterval(countdownInterval); // stops the timer
                       playAudio(4);
+                      document.getElementById('{{ study_session.uuid }}').style.opacity = 0.3;
                       setTimeout(() => {
                         alert("Synedrion is now complete, time for a break!");
+                        document.getElementById('{{ study_session.uuid }}').style.opacity = 1;
                       }, 3000); 
                       onBreak = false; // break complete, time to study
                       breakCount = durationFieldToString("{{ study_session.break_time }}") // reset break timer
@@ -91,8 +93,10 @@
                     if (count <= 0) {
                       clearInterval(countdownInterval); // stops the timer
                       playAudio(4);
+                      document.getElementById('{{ study_session.uuid }}').style.opacity = 0.3;
                       setTimeout(() => {
                         alert("Synedrion is now complete, time for a break!");
+                        document.getElementById('{{ study_session.uuid }}').style.opacity = 1;
                       }, 3000); 
                       onBreak = true; // study timer done, time for a break
                       count = durationFieldToString("{{ study_session.study_time }}") // reset study timer
