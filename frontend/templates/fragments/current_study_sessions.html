@@ -23,6 +23,18 @@
                 return `${minutes}:${seconds.toString().padStart(2, '0')}` // padStart for leading zero
               }
 
+              {% load static %}
+              const audioFile = new Audio("{% static 'assets/timer.wav' %}");
+
+              function playAudio(times) {
+                for (let i = 0; i < times; i++) {
+                  setTimeout(() => {
+                    audioFile.currentTime = 0;
+                    audioFile.play();
+                  }, i * 800); // .7 second delay
+                }
+              }
+
               const countdownDisplay = document.getElementById("study-time-{{ study_session.uuid }}");
               const breakDisplay = document.getElementById("break-time-{{ study_session.uuid }}");
               const startButton = document.getElementById("start-{{ study_session.uuid }}");
@@ -54,11 +66,14 @@
 
                 if (onBreak) {
                   countdownInterval = setInterval(() => { // executes every 1000ms
-                    breakCount -= 200;
+                    breakCount -= 500;
                     breakDisplay.innerHTML = formatTime(breakCount);
                     if (breakCount <= 0) {
                       clearInterval(countdownInterval); // stops the timer
-                      alert("Break is now complete, time for a Synedrion!") // alert the user
+                      playAudio(4);
+                      setTimeout(() => {
+                        alert("Synedrion is now complete, time for a break!");
+                      }, 3000); 
                       onBreak = false; // break complete, time to study
                       breakCount = durationFieldToString("{{ study_session.break_time }}") // reset break timer
                       breakDisplay.innerHTML = formatTime(breakCount); // reset break timer display
@@ -71,11 +86,14 @@
                   startButton.value = "On break..."
                 } else {
                   countdownInterval = setInterval(() => { // executes every 1000ms
-                    count -= 200;
+                    count -= 500;
                     countdownDisplay.innerHTML = formatTime(count);
                     if (count <= 0) {
                       clearInterval(countdownInterval); // stops the timer
-                      alert("Synedrion is now complete, time for a break!") // alert the user
+                      playAudio(4);
+                      setTimeout(() => {
+                        alert("Synedrion is now complete, time for a break!");
+                      }, 3000); 
                       onBreak = true; // study timer done, time for a break
                       count = durationFieldToString("{{ study_session.study_time }}") // reset study timer
                       countdownDisplay.innerHTML = formatTime(count); // reset study timer display
