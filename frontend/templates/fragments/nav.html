@@ -29,7 +29,11 @@
         </li>
       </ul>
     </div>
+    {% if user.username %}
     <a class="btn btn-ghost text-4xl font-[EB_Garamond]" href="{% url 'index' %}">{{ user.username }}'s <i>Ekklesia</i></a>
+    {% else %}
+    <a class="btn btn-ghost text-4xl font-[EB_Garamond]" href="{% url 'index' %}"><i>Ekklesia</i></a>
+    {% endif %}
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1 z-50">
