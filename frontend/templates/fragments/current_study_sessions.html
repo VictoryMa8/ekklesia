@@ -1,4 +1,4 @@
-<div id="current-study-sessions" class="flex flex-wrap gap-4 justify-center">
+<div id="current-study-sessions" class="flex flex-wrap gap-4 justify-center mt-0">
   {% if study_sessions %}
     {% for study_session in study_sessions %}
       <div class="card card-border bg-base-300 w-lg">
@@ -66,14 +66,14 @@
 
                 if (onBreak) {
                   countdownInterval = setInterval(() => { // executes every 1000ms
-                    breakCount -= 500;
+                    breakCount -= 1;
                     breakDisplay.innerHTML = formatTime(breakCount);
                     if (breakCount <= 0) {
                       clearInterval(countdownInterval); // stops the timer
                       playAudio(4);
                       document.getElementById('{{ study_session.uuid }}').style.opacity = 0.3;
                       setTimeout(() => {
-                        alert("Synedrion is now complete, time for a break!");
+                        alert("Break is now complete, time to study 📖");
                         document.getElementById('{{ study_session.uuid }}').style.opacity = 1;
                       }, 3000); 
                       onBreak = false; // break complete, time to study
@@ -88,14 +88,14 @@
                   startButton.value = "On break..."
                 } else {
                   countdownInterval = setInterval(() => { // executes every 1000ms
-                    count -= 500;
+                    count -= 1;
                     countdownDisplay.innerHTML = formatTime(count);
                     if (count <= 0) {
                       clearInterval(countdownInterval); // stops the timer
                       playAudio(4);
                       document.getElementById('{{ study_session.uuid }}').style.opacity = 0.3;
                       setTimeout(() => {
-                        alert("Synedrion is now complete, time for a break!");
+                        alert("Synedrion is now complete, time for a break 🪬");
                         document.getElementById('{{ study_session.uuid }}').style.opacity = 1;
                       }, 3000); 
                       onBreak = true; // study timer done, time for a break
