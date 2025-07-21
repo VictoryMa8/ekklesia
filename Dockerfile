@@ -17,7 +17,7 @@ RUN pip install -r requirements.txt
 COPY package.json package-lock.json ./
 RUN npm ci 
 
-# Copy code all app code (backend, frontend, .env)
+# Copy code all app code (backend, frontend, etc.)
 COPY . .
 
 # Expose port and run app
