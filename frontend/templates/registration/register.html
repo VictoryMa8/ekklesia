@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a class="btn btn-soft btn-primary mx-auto mt-5" href="{% url 'login' %}">Back To Login</a>
+<h1 class="text-4xl text-center my-5 font-bold font-[EB_Garamond]">Register For Ekklesia</h1>
+{% if messages %}
+<div>
+    {% for message in messages %}
+    <h1 class="text-4xl text-center mb-5 font-bold font-[EB_Garamond]">{{ message }}</h1>
+    {% endfor %}
+</div>
+{% endif %}
+<form method="POST" class="mx-auto mb-5 bg-indigo-800 p-10 flex flex-col rounded-md gap-5 text-xl font-bold font-[EB_Garamond]">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input class="btn btn-soft mx-auto mt-10 font-sans" type="submit" value="Register" />
+</form>
+{% endblock %}

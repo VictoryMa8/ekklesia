@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Task, StudySession
-from .forms import NewTask, NewStudySession
+from .forms import NewTask, NewStudySession, RegisterForm
 from datetime import timedelta # for study session times
 
 @login_required
@@ -94,3 +95,21 @@ def profile(request):
 @login_required
 def contact(request):
     return render(request, 'contact.html')
+
+def register(request):
+    # Initially get the form to display for the user
+    if request.method == "GET":
+        form = RegisterForm()
+        return render(request, "registration/register.html", {"form": form})
+    # After user submits form, save the user and display a message
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "You have signed up for Ekklesia successfully.")
+        else:
+            messages.error(request,"There was an error when signing up, please check the fields.",)
+        return render(request, "registration/register.html", {"form": form})
+    
+def forgot_password(request):
+    return render(request, 'registration/forgot_password.html')

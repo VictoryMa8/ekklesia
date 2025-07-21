@@ -2,7 +2,7 @@
 
 {% block content %}
   <h1 class="text-center text-6xl font-bold font-[EB_Garamond] p-10">Welcome to <i>Ekklesia</i>, please login 🪬</h1>
-  <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 self-center mb-10" method="post" action="{% url 'login' %}">
+  <form class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 self-center" method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <table>
       <tr>
@@ -14,7 +14,11 @@
         <td class="input">{{ form.password }}</td>
       </tr>
     </table>
-    <input class="btn btn-neutral mt-4" type="submit" value="Login" />
+    <input class="btn btn-soft mt-4" type="submit" value="Login" />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
+  <div class="flex flex-col gap-2">
+    <a class="btn btn-soft btn-info mx-auto" href="{% url 'forgot_password' %}">Forgot Password</a>
+    <a class="btn btn-soft btn-primary mx-auto" href="{% url 'register' %}">Register For Ekklesia</a>
+  </div>
 {% endblock %}
