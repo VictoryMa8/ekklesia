@@ -1,4 +1,4 @@
-<div id="current-study-sessions" class="flex flex-wrap gap-4 justify-center mt-0">
+<div id="current-study-sessions" class="flex flex-col justify-center items-center gap-5">
   {% if study_sessions %}
     {% for study_session in study_sessions %}
       <div class="card card-border bg-base-300 w-lg">
@@ -6,6 +6,7 @@
           <h2 class="card-title">{{ study_session.title }}</h2>
           <p class="text-xl">Study Time: <span id="study-time-{{ study_session.uuid }}">{{ study_session.study_time }}</span></p>
           <p class="text-xl">Break Time: <span id="break-time-{{ study_session.uuid }}">{{ study_session.break_time }}</span></p>
+          <span class="loading loading-infinity loading-lg htmx-indicator mt-5 mb-0" id="loading-{{ study_session.uuid }}"></span>
 
           <script>
             document.addEventListener('htmx:load', function() {
@@ -144,7 +145,7 @@
               <input id="start-{{ study_session.uuid }}" class="btn btn-primary" type="button" value="Start Studying" />
               <input id="pause-{{ study_session.uuid }}" class="btn btn-primary" type="button" value="Pause" />
               <input id="reset-{{ study_session.uuid }}" class="btn btn-primary" type="button" value="Reset" />
-            <form hx-post="{% url 'delete_study_session' uuid=study_session.uuid %}" hx-on::before-request="document.getElementById('{{ study_session.uuid }}').style.opacity = 0.3;" hx-indicator="#loading" hx-target="#current-study-sessions" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+            <form hx-on::before-request="document.getElementById('{{ study_session.uuid }}').style.opacity = 0.3;" hx-on::after-request="if(event.detail.successful) this.reset(); document.getElementById('{{ study_session.uuid }}').style.opacity = 1;" hx-indicator="#loading-{{ study_session.uuid }}" hx-post="{% url 'delete_study_session' uuid=study_session.uuid %}" hx-on::before-request="document.getElementById('{{ study_session.uuid }}').style.opacity = 0.3;" hx-indicator="#loading" hx-target="#current-study-sessions" hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
                 {% csrf_token %}
                 <input class="btn btn-primary" type="submit" value="Delete" />
             </form>

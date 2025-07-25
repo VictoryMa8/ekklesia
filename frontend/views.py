@@ -13,8 +13,17 @@ def index(request):
 def tasks(request):
     user = request.user
     form = NewTask()
+    study_form = NewStudySession(request.POST)
     tasks = Task.objects.filter(author=user)
-    return render(request, 'tasks.html', context={'form': form, 'tasks': tasks})
+    study_sessions = StudySession.objects.filter(author=user)
+    if study_form.is_valid():
+        study_session = study_form.save(commit=False)
+        study_session.author = user
+        study_session.save()
+        return redirect('tasks')
+    else:
+        study_form = NewStudySession()
+    return render(request, 'tasks.html', context={'form': form, 'tasks': tasks, 'study_sessions': study_sessions, 'study_form': study_form})
 
 def create_task(request):
     user = request.user
@@ -45,26 +54,11 @@ def delete_task(request, uuid):
     tasks = Task.objects.filter(author=request.user) # fetch all tasks of user
     return render(request, 'fragments/current_tasks.html', context={'tasks': tasks}) # render all tasks in the fragment
 
-@login_required
-def study_sessions(request):
-    user = request.user
-    study_sessions = StudySession.objects.filter(author=user)
-    if request.method == "POST":
-        form = NewStudySession(request.POST)
-        if form.is_valid():
-            study_session = form.save(commit=False)
-            study_session.author = user
-            study_session.save()
-            return redirect('study_sessions')
-    else:
-        form = NewStudySession()
-    return render(request, 'study_sessions.html', context={'study_sessions': study_sessions, 'form': form})
-
 def create_study_session(request):
     user = request.user
-    form = NewStudySession(request.POST)
-    if form.is_valid():
-        study_session = form.save(commit=False)
+    study_form = NewStudySession(request.POST)
+    if study_form.is_valid():
+        study_session = study_form.save(commit=False)
         study_session.author = user
         study_session.save()
     study_sessions = StudySession.objects.filter(author=user)
@@ -91,6 +85,10 @@ def about(request):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
+@login_required
+def leaderboard(request):
+    return render(request, 'leaderboard.html')
 
 @login_required
 def contact(request):

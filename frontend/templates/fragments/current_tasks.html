@@ -1,4 +1,4 @@
-<div id="current-tasks" class="flex flex-wrap gap-4 justify-center">
+<div id="current-tasks" class="flex flex-col justify-center items-center gap-5">
   {% if tasks %}
     {% for task in tasks %}
       <div id="{{ task.uuid }}" class="card card-border bg-base-300 w-lg">
@@ -9,7 +9,7 @@
           {% else %}
             <p class="italic">No description...</p>
           {% endif %}
-          <span class="loading loading-bars loading-lg htmx-indicator mt-5 mb-0" id="loading-{{ task.uuid }}"></span>
+          <span class="loading loading-infinity loading-lg htmx-indicator mt-5 mb-0" id="loading-{{ task.uuid }}"></span>
           <p>{{ task.created_at }}</p>
           <div class="card-actions justify-end">
             {% if task.completed %}
