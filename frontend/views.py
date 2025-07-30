@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Task, StudySession
 from .forms import NewTask, NewStudySession, RegisterForm
-from datetime import timedelta # for study session times
 
 @login_required
 def index(request):
@@ -113,5 +112,5 @@ def register(request):
 def forgot_password(request):
     return render(request, 'registration/forgot_password.html')
 
-def health_check(request):
+def health(request):
     return HttpResponse("OK")
