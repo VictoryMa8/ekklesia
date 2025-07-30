@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from .models import Task, StudySession
 from .forms import NewTask, NewStudySession, RegisterForm
 from datetime import timedelta # for study session times
@@ -111,3 +112,6 @@ def register(request):
     
 def forgot_password(request):
     return render(request, 'registration/forgot_password.html')
+
+def health_check(request):
+    return HttpResponse("OK")
