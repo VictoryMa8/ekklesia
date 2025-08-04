@@ -6,6 +6,7 @@ class Demos(AbstractUser):
     tasks_completed = models.IntegerField(default=0)
     cycles_completed = models.IntegerField(default=0)
     total_time_studied = models.IntegerField(default=0)
+    profile_picture = models.ImageField(upload_to='user_images/', null=True, blank=True)
 
     def __str__(self):
         return self.username
