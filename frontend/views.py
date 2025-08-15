@@ -78,9 +78,11 @@ def update_user(request, study_time):
     user.total_time_studied  += study_time
     user.save()
 
-@login_required
 def about(request):
     return render(request, 'about.html')
+
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html')
 
 @login_required
 def profile(request):
@@ -90,7 +92,6 @@ def profile(request):
 def leaderboard(request):
     return render(request, 'leaderboard.html')
 
-@login_required
 def contact(request):
     return render(request, 'contact.html')
 
