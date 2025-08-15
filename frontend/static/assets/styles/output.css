@@ -27,8 +27,6 @@
     --font-weight-light: 300;
     --font-weight-bold: 700;
     --radius-md: 0.375rem;
-    --default-transition-duration: 150ms;
-    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
   }
@@ -786,9 +784,6 @@
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }
-  .mx-100 {
-    margin-inline: calc(var(--spacing) * 100);
-  }
   .mx-auto {
     margin-inline: auto;
   }
@@ -1284,9 +1279,14 @@
       margin-inline: calc(var(--spacing) * 50);
     }
   }
-  .md\:mx-auto {
+  .md\:mx-70 {
     @media (width >= 48rem) {
-      margin-inline: auto;
+      margin-inline: calc(var(--spacing) * 70);
+    }
+  }
+  .md\:mx-100 {
+    @media (width >= 48rem) {
+      margin-inline: calc(var(--spacing) * 100);
     }
   }
   .md\:place-self-center {

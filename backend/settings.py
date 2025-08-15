@@ -110,6 +110,7 @@ AUTH_USER_MODEL = 'frontend.Demos'
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 # django-storages Settings
+'''
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
@@ -120,7 +121,9 @@ AWS_S3_USE_SSL = True
 AWS_S3_VERIFY = True
 AWS_QUERYSTRING_AUTH = True
 AWS_S3_ADDRESSING_STYLE = "virtual"
+'''
 
+'''
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
@@ -139,8 +142,10 @@ STORAGES = {
         }
     }
 }
+'''
 
-STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/{AWS_LOCATION}/'
+# STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/{AWS_LOCATION}/'
+STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "frontend/static",
